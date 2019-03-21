@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:ns="http://Foro" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://Foro">
+    <wsdl:types>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://Foro">
+
+            <xs:element name="subirPost">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="post" nillable="true" type="xs:string"/>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="tags" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="subirPostResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="return" nillable="true" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="leerPost">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="postID" nillable="true" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="leerPostResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element mname="return" nillable="true" type="xs:string"/> <!--> Seria de tipo Post pero no sé como se implementaría </!-->
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="buscarXTag">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="tag" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="buscarXTagResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="return" nillable="true" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="buscar">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="busqueda" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="buscarResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="return" nillable="true" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="getTitular">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="getTitularResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+        </xs:schema>
+
+    </wsdl:types>
+
+    <wsdl:message name="subirPostRequest">
+        <wsdl:part name="parameters" element="ns:subirPost"/>
+    </wsdl:message>
+    <wsdl:message name="subirPostResponse">
+        <wsdl:part name="parameters" element="ns:subirPostResponse"/>
+    </wsdl:message>
+    <wsdl:message name="leerPostRequest">
+        <wsdl:part name="parameters" element="ns:leerPost"/>
+    </wsdl:message>
+    <wsdl:message name="leerPostResponse">
+        <wsdl:part name="parameters" element="ns:leerPostResponse"/>
+    </wsdl:message>
+    <wsdl:message name="buscarRequest">
+        <wsdl:part name="parameters" element="ns:buscar"/>
+    </wsdl:message>
+    <wsdl:message name="buscarResponse">
+        <wsdl:part name="parameters" element="ns:buscarResponse"/>
+    </wsdl:message>
+    <wsdl:message name="buscarXTagRequest">
+        <wsdl:part name="parameters" element="ns:buscarXTag"/>
+    </wsdl:message>
+    <wsdl:message name="buscarXTagResponse">
+        <wsdl:part name="parameters" element="ns:buscarXTagResponse"/>
+    </wsdl:message>
+
+    <wsdl:portType name="ForoPortType">
+         <wsdl:operation name="subirPost">
+            <wsdl:input message="ns:subirPostRequest" wsaw:Action="urn:subirPost"/>
+            <wsdl:output message="ns:subirPostResponse" wsaw:Action="urn:subirPostResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="leerPost">
+            <wsdl:input message="ns:leerPostRequest" wsaw:Action="urn:leerPost"/>
+            <wsdl:output message="ns:leerPostResponse" wsaw:Action="urn:leerPostResponse"/>
+        </wsdl:operation>>
+        <wsdl:operation name="buscar">
+            <wsdl:input message="ns:buscarRequest" wsaw:Action="urn:buscar"/>
+            <wsdl:output message="ns:buscarResponse" wsaw:Action="urn:buscarResponse"/>
+        </wsdl:operatin>
+        <wsdl:operation name="buscarXTag">
+            <wsdl:input message="ns:buscarXTagRequest" wsaw:Action="urn:buscarXTag"/>
+            <wsdl:output message="ns:buscarXTagResponse" wsaw:Action="urn:buscarXTagResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="ForoSoap11Binding" type="ns:ForoPortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="subirPost">
+            <soap:operation soapAction="urn:subirPost" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="leerPost">
+            <soap:operation soapAction="urn:leerPost" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="buscar">
+            <soap:operation soapAction="urn:buscar" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="buscarXTag">
+            <soap:operation soapAction="urn:buscarXTag" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:binding name="ForoSoap12Binding" type="ns:ForoPortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="subirPost">
+            <soap12:operation soapAction="urn:subirPost" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="leerPost">
+            <soap12:operation soapAction="urn:leerPost" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="buscar">
+            <soap12:operation soapAction="urn:buscar" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="buscarXTag">
+            <soap12:operation soapAction="urn:buscarXTag" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:binding name="ForoHttpBinding" type="ns:ForoPortType">
+        <http:binding verb="POST"/>
+        <wsdl:operation name="subirPost">
+            <http:operation location="subirPost"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="leerPost">
+            <http:operation location="leerPost"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="buscar">
+            <http:operation location="buscar"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="buscarXTag">
+            <http:operation location="buscarXTag"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="Foro">
+        <wsdl:port name="ForoHttpSoap11Endpoint" binding="ns:ForoSoap11Binding">
+            <soap:address location="http://localhost:7162/axis2/services/Foro"/>
+        </wsdl:port>
+        <wsdl:port name="ForoHttpSoap12Endpoint" binding="ns:ForoSoap12Binding">
+            <soap12:address location="http://localhost:7162/axis2/services/Foro"/>
+        </wsdl:port>
+        <wsdl:port name="ForoHttpEndpoint" binding="ns:ForoHttpBinding">
+            <http:address location="http://localhost:7162/axis2/services/Foro"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

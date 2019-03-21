@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://ws.apache.org/axis2" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" targetNamespace="http://ws.apache.org/axis2">
+    <wsdl:types>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="unqualified" targetNamespace="http://ws.apache.org/axis2">
+            <xs:element name="sumar">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="args0" type="xs:float"/>
+                        <xs:element name="args1" type="xs:float"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="sumarResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="return" type="xs:float"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="restar">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="args0" type="xs:float"/>
+                        <xs:element name="args1" type="xs:float"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="restarResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="return" type="xs:float"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="multiplicar">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="args0" type="xs:float"/>
+                        <xs:element name="args1" type="xs:float"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="multiplicarResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="return" type="xs:float"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="dividir">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="args0" type="xs:float"/>
+                        <xs:element name="args1" type="xs:float"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="dividirResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="return" type="xs:float"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="sumarRequest">
+        <wsdl:part name="parameters" element="ns:sumar"/>
+    </wsdl:message>
+    <wsdl:message name="sumarResponse">
+        <wsdl:part name="parameters" element="ns:sumarResponse"/>
+    </wsdl:message>
+    <wsdl:message name="restarRequest">
+        <wsdl:part name="parameters" element="ns:restar"/>
+    </wsdl:message>
+    <wsdl:message name="restarResponse">
+        <wsdl:part name="parameters" element="ns:restarResponse"/>
+    </wsdl:message>
+    <wsdl:message name="multiplicarRequest">
+        <wsdl:part name="parameters" element="ns:multiplicar"/>
+    </wsdl:message>
+    <wsdl:message name="multiplicarResponse">
+        <wsdl:part name="parameters" element="ns:multiplicarResponse"/>
+    </wsdl:message>
+    <wsdl:message name="dividirRequest">
+        <wsdl:part name="parameters" element="ns:dividir"/>
+    </wsdl:message>
+    <wsdl:message name="dividirResponse">
+        <wsdl:part name="parameters" element="ns:dividirResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="Calculadora2PortType">
+        <wsdl:operation name="sumar">
+            <wsdl:input message="ns:sumarRequest" wsaw:Action="urn:sumar"/>
+            <wsdl:output message="ns:sumarResponse" wsaw:Action="urn:sumarResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="restar">
+            <wsdl:input message="ns:restarRequest" wsaw:Action="urn:restar"/>
+            <wsdl:output message="ns:restarResponse" wsaw:Action="urn:restarResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="multiplicar">
+            <wsdl:input message="ns:multiplicarRequest" wsaw:Action="urn:multiplicar"/>
+            <wsdl:output message="ns:multiplicarResponse" wsaw:Action="urn:multiplicarResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="dividir">
+            <wsdl:input message="ns:dividirRequest" wsaw:Action="urn:dividir"/>
+            <wsdl:output message="ns:dividirResponse" wsaw:Action="urn:dividirResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="Calculadora2Soap11Binding" type="ns:Calculadora2PortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="sumar">
+            <soap:operation soapAction="urn:sumar" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="restar">
+            <soap:operation soapAction="urn:restar" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="multiplicar">
+            <soap:operation soapAction="urn:multiplicar" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="dividir">
+            <soap:operation soapAction="urn:dividir" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="Calculadora2Soap12Binding" type="ns:Calculadora2PortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="sumar">
+            <soap12:operation soapAction="urn:sumar" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="restar">
+            <soap12:operation soapAction="urn:restar" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="multiplicar">
+            <soap12:operation soapAction="urn:multiplicar" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="dividir">
+            <soap12:operation soapAction="urn:dividir" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="Calculadora2HttpBinding" type="ns:Calculadora2PortType">
+        <http:binding verb="POST"/>
+        <wsdl:operation name="sumar">
+            <http:operation location="sumar"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="restar">
+            <http:operation location="restar"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="multiplicar">
+            <http:operation location="multiplicar"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="dividir">
+            <http:operation location="dividir"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="Calculadora2">
+        <wsdl:port name="Calculadora2HttpSoap11Endpoint" binding="ns:Calculadora2Soap11Binding">
+            <soap:address location="http://localhost:7162/axis2/services/Calculadora2.Calculadora2HttpSoap11Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="Calculadora2HttpSoap12Endpoint" binding="ns:Calculadora2Soap12Binding">
+            <soap12:address location="http://localhost:7162/axis2/services/Calculadora2.Calculadora2HttpSoap12Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="Calculadora2HttpEndpoint" binding="ns:Calculadora2HttpBinding">
+            <http:address location="http://localhost:7162/axis2/services/Calculadora2.Calculadora2HttpEndpoint/"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
