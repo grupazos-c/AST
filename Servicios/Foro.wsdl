@@ -8,6 +8,7 @@
                     <xs:sequence>
                         <xs:element minOccurs="0" name="post" nillable="true" type="xs:string"/>
                         <xs:element maxOccurs="unbounded" minOccurs="0" name="tags" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="autor" nillable="true" type="xs:string"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -68,16 +69,18 @@
                 </xs:complexType>
             </xs:element>
 
-            <xs:element name="getTitular">
+            <xs:element name="buscarXAutor">
                 <xs:complexType>
-                    <xs:sequence/>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="autor" nillable="true" type="xs:string"/>
+                    </xs:sequence>
                 </xs:complexType>
             </xs:element>
 
-            <xs:element name="getTitularResponse">
+            <xs:element name="buscarXAutorResponse">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                        <xs:element maxOccurs="unbounded" name="return" nillable="true" type="xs:int"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -110,6 +113,12 @@
     <wsdl:message name="buscarXTagResponse">
         <wsdl:part name="parameters" element="ns:buscarXTagResponse"/>
     </wsdl:message>
+    <wsdl:message name="buscarXAutorRequest">
+        <wsdl:part name="parameters" element="ns:buscarXAutor"/>
+    </wsdl:message>
+    <wsdl:message name="buscarXAutorResponse">
+        <wsdl:part name="parameters" element="ns:buscarXAutorResponse"/>
+    </wsdl:message>
 
     <wsdl:portType name="ForoPortType">
          <wsdl:operation name="subirPost">
@@ -127,6 +136,10 @@
         <wsdl:operation name="buscarXTag">
             <wsdl:input message="ns:buscarXTagRequest" wsaw:Action="urn:buscarXTag"/>
             <wsdl:output message="ns:buscarXTagResponse" wsaw:Action="urn:buscarXTagResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="buscarXAutor">
+            <wsdl:input message="ns:buscarXAutorRequest" wsaw:Action="urn:buscarXAutor"/>
+            <wsdl:output message="ns:buscarXAutorResponse" wsaw:Action="urn:buscarXAutorResponse"/>
         </wsdl:operation>
     </wsdl:portType>
 
@@ -161,6 +174,15 @@
         </wsdl:operation>
         <wsdl:operation name="buscarXTag">
             <soap:operation soapAction="urn:buscarXTag" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="buscarXAutor">
+            <soap:operation soapAction="urn:buscarXAutor" style="document"/>
             <wsdl:input>
                 <soap:body use="literal"/>
             </wsdl:input>
@@ -208,6 +230,15 @@
                 <soap12:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>
+        <wsdl:operation name="buscarXAutor">
+            <soap:operation soapAction="urn:buscarXAutor" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
     </wsdl:binding>
 
     <wsdl:binding name="ForoHttpBinding" type="ns:ForoPortType">
@@ -241,6 +272,15 @@
         </wsdl:operation>
         <wsdl:operation name="buscarXTag">
             <http:operation location="buscarXTag"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="buscarXAutor">
+            <http:operation location="buscarXAutor"/>
             <wsdl:input>
                 <mime:content type="application/xml" part="parameters"/>
             </wsdl:input>
