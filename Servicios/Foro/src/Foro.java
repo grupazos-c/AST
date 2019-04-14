@@ -12,7 +12,7 @@ public class Foro {
 	private static final String USER = "cliente";
 	private static final String PASS = "fBys{iB198Ha";
 
-	private static final String PREFIX = "[ Foro ]: ";
+	private static final String PREFIX = "[ Foro ]: "; //Defino esta variable para colocarla antes de todos los logs (para evitar el caos del Catalina.out
 
 	private static Connection conn = null;
 	private static Statement stmt = null;
@@ -30,22 +30,23 @@ public class Foro {
         if (post == null) {
             return 0;
         }
-        nuevoPost(post,tags);
-        int key = posts.size() + 1;
-        Post nuevoPost = new Post(post,tags);
-        posts.put(key, nuevoPost);
-        for (String var : tags){
-            if(var.equalsIgnoreCase("noticia")) {
-                try {
-					noticia("Un usuario anónimo",post);
-				} catch (Exception e) {
-					e.printStackTrace();
-					System.out.println(PREFIX + "La conexión con Noticia ha dado un error");
-					return -1;
-				}
-            }
+        //TODO Si incluimos nuevo post borrar el hash map
+        int salida = nuevoPost(post,tags);
+        
+        if(salida > 0) {
+	        for (String var : tags){
+	            if(var.equalsIgnoreCase("noticia")) {
+	                try {
+						noticia("Un usuario anónimo",post);
+					} catch (Exception e) {
+						e.printStackTrace();
+						System.out.println(PREFIX + "La conexión con Noticia ha dado un error");
+						return -1;
+					}
+	            }
+	        }
         }
-        return key;
+        return salida;
     }
 
     /**
@@ -54,11 +55,13 @@ public class Foro {
      * @return post leído
      */
     public Post leerPost(int postID) {
+    	//TODO to SQL
         Post post = posts.get(postID);
         return post;
     }
     
     public ArrayList<Integer> buscarXTag(String busqueda) {
+    	//TODO TO SQL
         ArrayList<Integer> respuesta = new ArrayList<Integer>();
         Iterator<Entry<Integer, Post>> it = posts.entrySet().iterator();
         while (it.hasNext()) {
@@ -74,6 +77,7 @@ public class Foro {
     }
 
     public ArrayList<Integer> buscar(String busqueda) {
+    	//TODO To SQL
         ArrayList<Integer> respuesta = new ArrayList<Integer>();
         Iterator<Entry<Integer, Post>> it = posts.entrySet().iterator();
         while (it.hasNext()) {
@@ -84,25 +88,6 @@ public class Foro {
         }
         return respuesta;
     }   
-    
-    /**
-     * Cuenta los posts subidos
-     * @return
-     * @throws SQLException 
-     */
-    private int countPosts() throws SQLException {
-    	
-    	String SQL = "{call countPosts (?)}";
-    	CallableStatement cstmt = conn.prepareCall (SQL);
-        cstmt.registerOutParameter(1, Types.INTEGER);
-
-        cstmt.executeUpdate();
-
-        int output = cstmt.getInt(1);
-
-        System.out.println(PREFIX + "Resultado de la llamada --> " +output);
-		return (output);
-	}
 
     /**
      * Conexión con el servicio Notcia para subir nuestro post como notica
@@ -121,7 +106,7 @@ public class Foro {
         con.setDoOutput(true);
 
         int status = con.getResponseCode();
-        System.out.println(PREFIX + "Salida de titulo: " + status);
+        System.out.println(PREFIX + "Post actualizado a noticia con título: " + titular + "\n\t Status: " + status);
 
         encodedURL=java.net.URLEncoder.encode(cuerpo, "UTF-8");
         url = new URL("http://localhost:7162/axis2/services/Noticia/setDescripcion?descripcion=" + encodedURL);
@@ -131,7 +116,7 @@ public class Foro {
         con.setDoOutput(true);
 
        status = con.getResponseCode();
-       System.out.println(PREFIX + "Salida de descripcion: " + status);
+       System.out.println(PREFIX + "Post actualizado a noticia con cuerpo: " + cuerpo + "\n\t Status: " + status);
 
        return;
     }
@@ -158,15 +143,40 @@ public class Foro {
          conn.close();
     }
     
+
+    /**
+     * Cuenta los posts subidos
+     * @return
+     * @throws SQLException 
+     */
+    private int countPosts() throws SQLException {
+    	
+    	String SQL = "{call countPosts (?)}";
+    	CallableStatement cstmt = conn.prepareCall (SQL);
+        cstmt.registerOutParameter(1, Types.INTEGER);
+
+        cstmt.executeUpdate();
+
+        int output = cstmt.getInt(1);
+
+        System.out.println(PREFIX + "Resultado de la llamada --> " +output);
+		return (output);
+	}
+    
     /**
      * Guardar el Post en SQL
      * @param post
      * @param tags
      */
-    private void nuevoPost(String post, ArrayList<String> tags) {
+    private int nuevoPost(String post, ArrayList<String> tags) {
     	try {
     		init();			//Comenzamos la conexión y nos aseguramos que todo funcione
     		int numposts = countPosts() + 1;
+    		
+    		conn.setAutoCommit(false);
+    		conn.commit();
+    		
+    		try {
         	String comando; //comando a ejecutar en mySQL
         	comando = ("insert into Posts values ('" + numposts + "', '" + post + "');");
         	
@@ -176,17 +186,28 @@ public class Foro {
 				String tag = (String) iterator.next().toUpperCase();
 				
 				
-				comando = ("insert into Posts values ('" + numposts + "', '" + tag + "');");
+				comando = ("insert into Tags values ('" + numposts + "', '" + tag + "');");
 	        	
 	        	stmt.executeUpdate(comando);
 			}
+    		}catch(SQLException e) {
+    			conn.rollback();
+    		}
+        	conn.commit();
+        	conn.setAutoCommit(true);
+        	
+        	close();
+        	
+        	return numposts;
         	
     	}catch(ClassNotFoundException e){
     		System.out.println(PREFIX + "ERROR: El JDBC_Driver no funciona correctamente");
     		e.printStackTrace();
+    		return -2; //Error del servicio
     	}catch (SQLException e) {
-    		System.out.println(PREFIX + "ERROR: La conexión con SQL ha fracasado");
-    		e.printStackTrace();    		
+    		System.out.println(PREFIX + "ERROR: SQL Exception");
+    		e.printStackTrace();   
+    		return -1; //Error del usuario? (Etiquetas no permitidas TODO Uso de ; en el post?? podemos cambiar el delimiter para que no pase esto?
 		}
   		
   	}
