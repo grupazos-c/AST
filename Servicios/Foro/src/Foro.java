@@ -6,10 +6,15 @@ import java.sql.*;
 
 /**
  * Esta clase declarará un foro que ofertará los siguientes servicios:
- * -SubirPost: Guardará el post enviado, junto con sus etiquetas en una base de datos SQL y devolverá el ID de dicho post en caso de que se guarde correctamente
- * -LeerPost: Buscará en la BD SQL el contenido de un post y sus respectivos tags a partir de su ID
- * -BuscarPost: Buscará todos los posts qeu contengan una cadena
- * -BuscarXTag: buscará todos los posts que compartan un tag
+ * -SubirPost: Guardará el post enviado, junto con sus etiquetas en una base de datos SQL y devolverá el ID de dicho post en caso de que se guarde correctamente.
+ * -LeerPost: Buscará en la BD SQL el contenido de un post y sus respectivos tags a partir de su ID.
+ * -BuscarPost: Buscará todos los posts qeu contengan una cadena.
+ * -BuscarXTag: buscará todos los posts que compartan un tag.
+ * 
+ * Entendemos por 	Posts: Cadenas de texto que, por ahora, no incluirán el caracter ';'.
+ * 					Tags: Cadenas de texto, en mayúsculas que se asociarán a los distintos posts, un post no pude tener varias etiquetas con el mismo valor, pero una etiqueta si puede aparecer asociada a varios posts.
+ * Tamaños máximos:	Post: 281 caracteres
+ * 					Tag: 101 caracteres
  * 
  * @author VigoCoffeeLovers
  * @version 1.0
