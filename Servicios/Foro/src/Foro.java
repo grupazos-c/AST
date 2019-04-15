@@ -4,6 +4,17 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.sql.*;
 
+/**
+ * Esta clase declarará un foro que ofertará los siguientes servicios:
+ * -SubirPost: Guardará el post enviado, junto con sus etiquetas en una base de datos SQL y devolverá el ID de dicho post en caso de que se guarde correctamente
+ * -LeerPost: Buscará en la BD SQL el contenido de un post y sus respectivos tags a partir de su ID
+ * -BuscarPost: Buscará todos los posts qeu contengan una cadena
+ * -BuscarXTag: buscará todos los posts que compartan un tag
+ * 
+ * @author VigoCoffeeLovers
+ * @version 1.0
+ *
+ */
 public class Foro {
 
 	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -17,8 +28,6 @@ public class Foro {
 	private static Connection conn = null;
 	private static Statement stmt = null;
 
-    /**Almacen de posts, la key es el postID */
-    private static HashMap<Integer, Post> posts = new HashMap<Integer, Post>();
 
     /**
      * Función de subida de Post
@@ -30,7 +39,6 @@ public class Foro {
         if (post == null) {
             return 0;
         }
-        //TODO Si incluimos nuevo post borrar el hash map
         int salida = nuevoPost(post,tags);
         
         if(salida > 0) {
@@ -92,33 +100,72 @@ public class Foro {
         return null;
     }
     
+    /**
+     * Busqueda de posts por tag
+     * @param busqueda etiqueta a buscar
+     * @return posts que contienen dicha etiqueta
+     */
     public ArrayList<Integer> buscarXTag(String busqueda) {
-    	//TODO TO SQL
-        ArrayList<Integer> respuesta = new ArrayList<Integer>();
-        Iterator<Entry<Integer, Post>> it = posts.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<Integer, Post> pair = (Map.Entry<Integer, Post>)it.next();
-            ArrayList<String> tags = pair.getValue().getTags();
-            for (String var : tags) {
-                if (var.equalsIgnoreCase(busqueda)) {
-                    respuesta.add(pair.getKey());
-                }
-            }
-        }
-        return respuesta;
+    	try {
+    		init();			//Comenzamos la conexión y nos aseguramos que todo funcione
+        	
+        	String comando = ("select Posts.Post_ID from Posts inner join Tags on Tags.Post_ID = Posts.Post_ID where Tag = '" + busqueda.trim() +"' group by Post_ID;");
+        	
+        	ResultSet rs = stmt.executeQuery(comando);
+        	
+        	ArrayList<Integer> posts = new ArrayList<Integer>();
+        	
+        	while (rs.next()) {
+            	int post = rs.getInt(1);
+            	posts.add(post);
+        	}
+        	
+        	close();
+        	
+        	return posts;
+        	
+    	}catch(ClassNotFoundException e){
+    		System.out.println(PREFIX + "ERROR: El JDBC_Driver no funciona correctamente");
+    		e.printStackTrace();
+    	}catch (SQLException e) {
+    		System.out.println(PREFIX + "ERROR: SQL Exception");
+    		e.printStackTrace();  
+		}
+        return null;
     }
 
+    /**
+     * Busqueda de posts mediante cadena
+     * @param busqueda cadena a buscar
+     * @return posts que contengan dicha cadena (solo en el cuerpo)
+     */
     public ArrayList<Integer> buscar(String busqueda) {
-    	//TODO To SQL
-        ArrayList<Integer> respuesta = new ArrayList<Integer>();
-        Iterator<Entry<Integer, Post>> it = posts.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<Integer, Post> pair = (Map.Entry<Integer, Post>)it.next();
-            if (pair.getValue().getPost().contains(busqueda)) {
-                respuesta.add(pair.getKey());
-            }
-        }
-        return respuesta;
+    	try {
+    		init();			//Comenzamos la conexión y nos aseguramos que todo funcione
+        	
+        	String comando = ("select Post_ID from Posts where Post like '%" + busqueda.trim() + "%';");
+        	
+        	ResultSet rs = stmt.executeQuery(comando);
+        	
+        	ArrayList<Integer> posts = new ArrayList<Integer>();
+        	
+        	while (rs.next()) {
+            	int post = rs.getInt(1);
+            	posts.add(post);
+        	}
+        	
+        	close();
+        	
+        	return posts;
+        	
+    	}catch(ClassNotFoundException e){
+    		System.out.println(PREFIX + "ERROR: El JDBC_Driver no funciona correctamente");
+    		e.printStackTrace();
+    	}catch (SQLException e) {
+    		System.out.println(PREFIX + "ERROR: SQL Exception");
+    		e.printStackTrace();  
+		}
+        return null;
     }   
 
     /**
