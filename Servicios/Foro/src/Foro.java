@@ -55,9 +55,41 @@ public class Foro {
      * @return post leído
      */
     public Post leerPost(int postID) {
-    	//TODO to SQL
-        Post post = posts.get(postID);
-        return post;
+    	try {
+    		init();			//Comenzamos la conexión y nos aseguramos que todo funcione
+    		
+        	String comando; //comando a ejecutar en mySQL
+        	comando = ("select Post from Posts where Post_ID = " + postID + ";");
+        	
+        	ResultSet rs = stmt.executeQuery(comando);
+        	
+        	rs.next();
+        	String postchar = rs.getString(1);
+        	
+        	comando = ("select Tag from Tags where Post_ID = " + postID +";");
+        	
+        	rs = stmt.executeQuery(comando);
+        	
+        	ArrayList<String> tags = new ArrayList<String>();
+        	
+        	while (rs.next()) {
+            	String tag = rs.getString(1);
+            	tags.add(tag);
+        	}
+        	
+        	close();
+        	
+        	Post post = new Post(postchar, tags);
+        	return post;
+        	
+    	}catch(ClassNotFoundException e){
+    		System.out.println(PREFIX + "ERROR: El JDBC_Driver no funciona correctamente");
+    		e.printStackTrace();
+    	}catch (SQLException e) {
+    		System.out.println(PREFIX + "ERROR: SQL Exception");
+    		e.printStackTrace();  
+		}
+        return null;
     }
     
     public ArrayList<Integer> buscarXTag(String busqueda) {
