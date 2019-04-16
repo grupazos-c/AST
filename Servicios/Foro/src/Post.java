@@ -4,10 +4,12 @@ public class Post {
 
     private ArrayList<String> tags;
     private String post;
+    private String autor;
 
-    public Post(String post,ArrayList<String> tags) {
+    public Post(String post,ArrayList<String> tags, String autor) {
         this.post = post;
         this.tags = tags;
+        this.setAutor(autor);
     }
 
     /**
@@ -37,5 +39,13 @@ public class Post {
     public String getPost() {
         return post;
     }
+
+	public String getAutor() {
+		return autor;
+	}
+
+	public void setAutor(String autor) {
+		this.autor = autor;
+	}
 
 }

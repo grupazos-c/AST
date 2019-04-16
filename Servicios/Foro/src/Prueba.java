@@ -20,27 +20,14 @@ public class Prueba {
 	            System.out.println("Connecting to database...");
 	            conn = DriverManager.getConnection(DB_URL,USER,PASS);
 
-	            conn.setAutoCommit(false);
-	            
-	            conn.commit();
-	            
-	            System.out.println("Creating statement...");
 	            stmt = conn.createStatement();
-	            String[] sql=new String[5];
-	            sql[0] = "insert into Tags values ('1', 'Bemvido');";
-	            sql[0] = "insert into Tags values ('1', 'Welcome');";
-	            sql[0] = "insert into Tags values ('1', 'Benvite');";
-	            sql[0] = "insert into Tags values ('1', 'Buenoyano?');";
-	            sql[0] = "insert into Tags values ('1', 'Bienvenido');";
-
-	            for (int i = 0; i <sql.length ; i++) {
-	                int ok = stmt.executeUpdate(sql[i]);
-	                System.out.println("Query OK, "+ok+" row afected ("+i+")");
-	            }
-
-	            conn.commit();
 	            
-	            conn.setAutoCommit(true);
+	            ResultSet rs = stmt.executeQuery("select Tag from Tags where Post_ID = 1;");
+	            
+	            while (rs.next()) {
+	            	String tag = rs.getString(1);
+	            	System.out.println("Tag: " + tag);
+	            }
 
 
 	            stmt.close();

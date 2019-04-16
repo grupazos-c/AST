@@ -1,7 +1,6 @@
 
 import java.net.*;
 import java.util.*;
-import java.util.Map.Entry;
 import java.sql.*;
 
 /**
@@ -40,17 +39,17 @@ public class Foro {
      * @param tags etiquetas con las que se asociarán el post
      * @return postID del post subido
      */
-    public int subirPost( String post, ArrayList<String> tags) {
+    public int subirPost( String post, ArrayList<String> tags, String username) {
         if (post == null) {
             return 0;
         }
-        int salida = nuevoPost(post,tags);
+        int salida = nuevoPost(post,tags,username);
         
         if(salida > 0) {
 	        for (String var : tags){
 	            if(var.equalsIgnoreCase("noticia")) {
 	                try {
-						noticia("Un usuario anónimo",post);
+						noticia(username+" en redes",post);
 					} catch (Exception e) {
 						e.printStackTrace();
 						System.out.println(PREFIX + "La conexión con Noticia ha dado un error");
@@ -72,12 +71,14 @@ public class Foro {
     		init();			//Comenzamos la conexión y nos aseguramos que todo funcione
     		
         	String comando; //comando a ejecutar en mySQL
-        	comando = ("select Post from Posts where Post_ID = " + postID + ";");
+        	comando = ("select Post, Autor from Posts where Post_ID = " + postID + ";");
         	
         	ResultSet rs = stmt.executeQuery(comando);
         	
         	rs.next();
         	String postchar = rs.getString(1);
+        	String autorchar = rs.getString(2);
+        	
         	
         	comando = ("select Tag from Tags where Post_ID = " + postID +";");
         	
@@ -92,7 +93,7 @@ public class Foro {
         	
         	close();
         	
-        	Post post = new Post(postchar, tags);
+        	Post post = new Post(postchar, tags, autorchar);
         	return post;
         	
     	}catch(ClassNotFoundException e){
@@ -252,7 +253,10 @@ public class Foro {
      * @param post
      * @param tags
      */
-    private int nuevoPost(String post, ArrayList<String> tags) {
+    private int nuevoPost(String post, ArrayList<String> tags, String username) {
+    	if(post.contains(";")||username.contains(";")) {
+    		return -3;
+    	}
     	try {
     		init();			//Comenzamos la conexión y nos aseguramos que todo funcione
     		int numposts = countPosts() + 1;
@@ -262,13 +266,16 @@ public class Foro {
     		
     		try {
         	String comando; //comando a ejecutar en mySQL
-        	comando = ("insert into Posts values ('" + numposts + "', '" + post + "');");
+        	comando = ("insert into Posts values ('" + numposts + "', '" + post + "', '" + username + ");");
         	
         	stmt.executeUpdate(comando);
         	
         	for (Iterator<String> iterator = tags.iterator(); iterator.hasNext();) {
 				String tag = (String) iterator.next().toUpperCase();
 				
+				if(tag.contains(";")) {
+					return -3;
+				}
 				
 				comando = ("insert into Tags values ('" + numposts + "', '" + tag + "');");
 	        	
