@@ -40,7 +40,7 @@ public class Foro {
      * @return postID del post subido
      */
     public int subirPost( String post, ArrayList<String> tags, String username) {
-        if (post == null) {
+        if (post == null||username == null||username.equals("")) {
             return 0;
         }
         int salida = nuevoPost(post,tags,username);
