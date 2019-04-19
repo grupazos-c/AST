@@ -22,8 +22,8 @@ Los servicios desplegados son 3 servicios POJO muy sencillos de implementar:
     - _CREATE USER 'cliente'@'localhost' IDENTIFIED BY 'fBys{iB198Ha';_
     - _GRANT ALL PRIVILEGES ON Foro.* TO 'Cliente'@'localhost';_
     - _use Foro;_
-    - _\. {PATH}/ForoSetUp.sql_
-    - _\. {PATH}/countPosts.sql_
+    - _\\. {PATH}/ForoSetUp.sql_
+    - _\\. {PATH}/countPosts.sql_
 
 4. El servicio de foro utilizará este usuario para conectarse a la BD mediante el driver JDBC que puede ser descargado en: http://dev.mysql.com/downloads/connector/j/
     
