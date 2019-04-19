@@ -1,15 +1,15 @@
 public class Calculadora {
 
-	public float sumar(float s1) {
-		return (s1 + s1);
+	public float sumar(float s1, float s2) {
+		return (s1 + s2);
 	}
 
 	public float restar(float min, float sus) {
 		return (min - sus);
 	}
 
-	public float multiplicar(float m1) {
-		return (m1 * m1);
+	public float multiplicar(float m1, float m2) {
+		return (m1 * m2);
 	}
 
 	public float dividir(float num, float den) {

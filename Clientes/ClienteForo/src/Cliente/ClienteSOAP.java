@@ -1,6 +1,5 @@
+package Cliente;
 import java.io.IOException;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -21,7 +20,6 @@ import org.apache.juddi.v3.client.transport.TransportException;
 import org.uddi.api_v3.AuthToken;
 import org.uddi.api_v3.Name;
 import org.uddi.v3_service.DispositionReportFaultMessage;
-import org.w3c.dom.NodeList;
 
 public class ClienteSOAP {
 	

@@ -1,3 +1,4 @@
+package Cliente;
 import java.util.ArrayList;
 
 public class Post {
