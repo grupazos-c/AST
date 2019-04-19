@@ -190,7 +190,7 @@ public class Foro {
 	 * @param password contarseña
 	 * @return -1: usuario ya existente; -2: SQL error
 	 */
-	public int resgistrar(String username, String password) {
+	public int registrar(String username, String password) {
 		if (password.contains(";") || username.contains(";")) {
 			return -2;
 		}
@@ -198,6 +198,7 @@ public class Foro {
 			init();
 
 			String comando = ("insert into Autores values ('" + username + "', '" + password + "');");
+			System.out.println("Ejecutando comando: " + comando);
 			stmt.executeUpdate(comando);
 
 			close();
