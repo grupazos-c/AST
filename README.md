@@ -1,9 +1,9 @@
 # AST
 Proyecto C de AST
 
-/********************************************************\
+/*********************************************************/
   Intrucciones de compilzación e instalación del servicio
-\********************************************************/
+/*********************************************************/
 
 Estas instrucciones se dividen en 3 partes:
   - Instalación de servicios
