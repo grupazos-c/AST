@@ -14,7 +14,19 @@ INSTALACIÓN DE SERVICIOS:
 
 Los servicios desplegados son 3 servicios POJO muy sencillos de implementar:
 1. Compila los 4 archivos .java y guarda los resultantes .class en la carpeta: _{APACHE_HOME}/webapps/axis2/WEB-INF/pojo_
+
 2. Comprueba que todos los servicios están disponibles desde el navegador
+
+3. Para el servicio de Foro se requiere crear una base de datos en mySQL siguiendo los siguientes comandos
+    - _CREATE DATABASE Foro;_
+    - _CREATE USER 'cliente'@'localhost' IDENTIFIED BY 'fBys{iB198Ha';_
+    - _GRANT ALL PRIVILEGES ON Foro.* TO 'Cliente'@'localhost';_
+    - _use Foro;_
+    - _\. {PATH}/ForoSetUp.sql_
+    - _\. {PATH}/countPosts.sql_
+
+4. El servicio de foro utilizará este usuario para conectarse a la BD mediante el driver JDBC que puede ser descargado en: http://dev.mysql.com/downloads/connector/j/
+    
 
 
 INSTALACIÓN DE MÓDULOS:
