@@ -1,7 +1,5 @@
 package userguide.loggingmodule;
 
-import java.util.HashMap;
-
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.description.AxisDescription;
@@ -11,7 +9,6 @@ import org.apache.neethi.Assertion;
 import org.apache.neethi.Policy;
 
 public class LoggingModule implements Module{
-	public static HashMap<String, String> mapa = new HashMap<>() ;
 
 	@Override
 	public void applyPolicy(Policy arg0, AxisDescription arg1) throws AxisFault {
@@ -34,10 +31,6 @@ public class LoggingModule implements Module{
 	public void init(ConfigurationContext configContext, AxisModule module) throws AxisFault {
 		// TODO Auto-generated method stub
 		System.out.println("Inicialización del servicio de logging");
-		mapa.clear();
-		
-		
-		
 	}
 
 	@Override
