@@ -69,9 +69,9 @@ public class VentanaClienteForo extends JFrame {
 		BufferedImage lupa = null;
 		BufferedImage refresh = null;
 		try {
-			logo = ImageIO.read(new File("/home/roi/Imaxes/VigoCoffeeLovers2.png"));
-			lupa = ImageIO.read(new File("/home/roi/Imaxes/Lupa.png"));
-			refresh = ImageIO.read(new File("/home/roi/Imaxes/Refresh.png"));
+			logo = ImageIO.read(new File("VigoCoffeeLovers2.png"));
+			lupa = ImageIO.read(new File("Lupa.png"));
+			refresh = ImageIO.read(new File("Refresh.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -89,7 +89,7 @@ public class VentanaClienteForo extends JFrame {
 		SingPanel.setBackground(new Color(255, 255, 255));
 
 		JLabel usernameJL = new JLabel("Nickname: ");
-		JTextField usernameJT = new JTextField("Nombre de usuario");
+		JTextField usernameJT = new JTextField();
 		JButton registrarJB = new JButton("Registrarse");
 		JLabel pwdJL = new JLabel("Password: ");
 		JPasswordField pwdJT = new JPasswordField();
