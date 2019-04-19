@@ -171,12 +171,6 @@ public class VentanaClienteForo extends JFrame {
 		scroll.setViewportView(foroPanel);
 		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-		ArrayList<String> list = new ArrayList<String>();
-		list.add("a");
-		list.add("2");
-		list.add("3");
-		addPost("hola", "holabuenas a todos", list);
-
 		/***********************************
 		 * GridBagLayout
 		 ***********************************/
@@ -245,6 +239,8 @@ public class VentanaClienteForo extends JFrame {
 		npostJB.addActionListener(al);
 		buscarJB.addActionListener(al);
 		refreshJB.addActionListener(al);
+		
+		refresh();
 
 	}
 
@@ -370,12 +366,12 @@ public class VentanaClienteForo extends JFrame {
 				tags[i] = JOptionPane.showInputDialog(null,
 						"Introduzca un Tag\n Pulse cancelar para dejar de introducir tags");
 			} while ((i < 9) && (tags[i++] != null));
-			System.out.println("Tags recogidos: " + Arrays.toString(tags));
+//			System.out.println("Tags recogidos: " + Arrays.toString(tags));
 			String[] tags2 = new String[i - 1];
 			for (i = i - 2; i >= 0; i--) {
 				tags2[i] = tags[i];
 			}
-			System.out.println("Tags pasados: " + Arrays.toString(tags2));
+//			System.out.println("Tags pasados: " + Arrays.toString(tags2));
 			try {
 				int respuesta = ClienteSOAP.subirPost(post, tags2, usuario, pass);
 
@@ -394,6 +390,9 @@ public class VentanaClienteForo extends JFrame {
 					break;
 				case -4:
 					error("Unexpected Exception");
+					break;
+				case -6:
+					error("El par usuario contraseña es incorrecto");
 					break;
 				default:
 					foroPanel.removeAll();

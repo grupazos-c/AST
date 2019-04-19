@@ -75,7 +75,7 @@ public class LogHandler extends AbstractHandler implements Handler {
 					}
 				}
 			} else {
-				System.out.println("Aquí saltaría el else");
+				System.out.println("Servicio que no requiere auth");
 				return InvocationResponse.CONTINUE;
 			}
 
@@ -95,7 +95,8 @@ public class LogHandler extends AbstractHandler implements Handler {
 
 			String comando; // comando a ejecutar en mySQL
 			comando = ("select Pwd from Autores where Autor = '" + usuario + "';");
-
+			System.out.println("[Logging:] Ejecutando comando: " + comando);
+			
 			ResultSet rs = stmt.executeQuery(comando);
 
 			rs.next();
@@ -105,8 +106,8 @@ public class LogHandler extends AbstractHandler implements Handler {
 			conn.close();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
 			System.out.println("[Logging:] Error en el comando SQL");
+			e.printStackTrace();
 			return InvocationResponse.ABORT;
 		}
 

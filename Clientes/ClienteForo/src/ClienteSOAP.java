@@ -1,4 +1,7 @@
 import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -13,23 +16,20 @@ import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 import javax.xml.soap.SOAPPart;
 
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.juddi.v3.client.transport.TransportException;
+import org.uddi.api_v3.AuthToken;
+import org.uddi.api_v3.Name;
+import org.uddi.v3_service.DispositionReportFaultMessage;
 import org.w3c.dom.NodeList;
 
 public class ClienteSOAP {
-
+	
 	public static void main(String[] args) {
 		try {
-//			ArrayList<String> tags = new ArrayList<String>();
-			String[] tags = { "Cliente", "SOAP" };
-//			tags.add("Cliente");
-//			tags.add("SOAP");
-//			tags.add("vivaa");
-
-//			System.out.println(leerPost("1"));
-			System.out.println(subirPost("Post generado por el cliente SOAP", tags, "Cliente", "1234"));
-//			System.out.println(contarPost());
-
-		} catch (UnsupportedOperationException | SOAPException e) {
+			init();
+		} catch (ConfigurationException | RemoteException | TransportException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -41,6 +41,23 @@ public class ClienteSOAP {
 	static String soapActionBuscar = "http://localhost:7162/axis2/services/Foro/buscar";
 	static String soapActionresgistrar = "http://localhost:7162/axis2/services/Foro/registrar";
 	static String soapActionContar = "http://localhost:7162/axis2/services/Foro/contarPost";
+	
+	@SuppressWarnings("deprecation")
+	public static void init() throws ConfigurationException, TransportException, DispositionReportFaultMessage, RemoteException {
+		ClienteUDDI clienteuddi = new ClienteUDDI("usuario","clave");
+		
+		AuthToken token = clienteuddi.obtenerTokenDeAutentificacion();
+        
+		String ruta = clienteuddi.obtenerDireccionServicio(clienteuddi.obtenerClaveServicio(new Name("Foro",""), new Name("VigoCoffeeLovers",""), token), token);
+
+		soapEndpointUrl = ruta;                
+		soapActionSubirPost = ruta + "/subirPost";  
+		soapActionLeerPost = ruta + "/leerPost";    
+		soapActionBuscarxTag = ruta + "/buscarXTag";
+		soapActionBuscar = ruta + "/buscar";        
+		soapActionresgistrar = ruta + "/registrar"; 
+		soapActionContar = ruta + "/contarPost";    
+	}
 
 	public static int subirPost(String post, String[] tags, String username, String password)
 			throws UnsupportedOperationException, SOAPException {
@@ -98,8 +115,10 @@ public class ClienteSOAP {
 		System.out.println("Respuesta recibida: ");
 		try {
 			soapResponse.writeTo(System.out);
-		} catch (IOException e) {
+		} catch (Exception e) {
+			System.out.println("Solicitud cancelada por el servicio: Username no reconocido o contrtaseña incorrecta");
 			e.printStackTrace();
+			return -6;
 		}
 		System.out.println();
 
@@ -374,15 +393,15 @@ public class ClienteSOAP {
 		return -10;
 	}
 
-	//TODO no funciona correctamente
 	private static ArrayList<Integer> response2arrint(SOAPMessage soapResponse) throws SOAPException {
 		ArrayList<Integer> respuesta = new ArrayList<Integer>();
 		Iterator<?> it = soapResponse.getSOAPBody().getChildElements();
 		while (it.hasNext()) {
 			SOAPElement el1 = (SOAPElement) it.next();
 			Iterator<?> it2 = el1.getChildElements();
-			while (it.hasNext()) {
+			while (it2.hasNext()) {
 				SOAPElement el2 = (SOAPElement) it2.next();
+				System.out.println(el2.getTextContent());
 				try {
 					if (el2.getNodeName().equals("return")) {
 						respuesta.add(Integer.parseInt(el2.getTextContent()));
@@ -393,5 +412,55 @@ public class ClienteSOAP {
 		}
 		return respuesta;
 	}
+
+//	public static Post leerPostWSAddressing(String PostID, String destino) throws SOAPException, UnknownHostException, IOException {
+//		// Create SOAP Connection
+//		SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.newInstance();
+//		SOAPConnection soapConnection = soapConnectionFactory.createConnection();
+//
+//		// Create SOAP Message
+//		MessageFactory messageFactory = MessageFactory.newInstance();
+//		SOAPMessage soapMessage = messageFactory.createMessage();
+//
+//		// Build SOAP Message
+//		SOAPPart soapPart = soapMessage.getSOAPPart();
+//
+//		String myNamespace = "myNamespace";
+//		String myNamespaceURI = "http://ws.apache.org/axis2";
+//		String wsaNamespace = "wsa";
+//		String wsaNamespaceURI = "http://www.w3.org/2005/08/addressing";
+//		
+//		
+//
+//		// SOAP Envelope
+//		SOAPEnvelope envelope = soapPart.getEnvelope();
+//		envelope.addNamespaceDeclaration(myNamespace, myNamespaceURI);
+//
+//		// SOAP Body
+//		SOAPBody soapBody = envelope.getBody();
+//
+//		SOAPElement soapBodyElem = soapBody.addChildElement("leerPost", myNamespace);
+//		SOAPElement soapBodyPostID = soapBodyElem.addChildElement("postID", myNamespace);
+//		soapBodyPostID.addTextNode(PostID);
+//
+//		MimeHeaders headers = soapMessage.getMimeHeaders();
+//		headers.addHeader("SOAPAction", soapActionLeerPost);
+//		headers.addHeader("ReplyTo", "localhost:7163");
+//
+//		soapMessage.saveChanges();
+//		
+//
+//		// Send SOAP Message to SOAP Server
+//		SOAPMessage soapResponse = soapConnection.call(soapMessage, soapEndpointUrl);
+//		System.out.println("Respuesta recibida: ");
+//		try {
+//			soapResponse.writeTo(System.out);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		System.out.println();
+//
+//		return response2Post(soapResponse);
+//	}
 
 }
