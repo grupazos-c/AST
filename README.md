@@ -42,3 +42,8 @@ INTALACIÓN DE jUDDI:
 3. Tras iniciar y ajustar como deseemos el apache, deberemos arrancarlo ejecutando el archivo _juddi-distro-3.3.6/juddi-tomcat-3.3.6/bin/startup.sh_ 
 
 4. Cuando un servicio se dé de alta deberá comunicárselo al servidor UDDI mediante la clase ClienteUDDI. Para el caso de nuestro servicio de Foro solo tenemos que ejecutar el archivo ForoSetUp.java que, junto a la clase ClienteUDDI, dará de alta el servicio en el servidor UDDI. La ejecucion de este archivo tendrá como parámetro de entrada la URL a dicho servicio (p.e http:\\localhost:7162/axis2/services/Foro ó 192.168.43.2:8080/axis2/services/Foro)
+
+
+***nota: como las pruebas se van a realizar entre nuestros equipos, por defecto están los puertos cerrados (en los que alojamos el apache). Por lo tanto se plantean dos soluciones: la primera es desactivar el firewall del ordenador (nada recomendable) y la segunda, que es la que utilizaremos nosotros, abrir el puerto donde esté desplegado el apache.
+
+Entonces, para probar nuestro SISTEMA DISTRIBUIDO conectaremos los equipos en la misma red local y procederemos con la prueba.
