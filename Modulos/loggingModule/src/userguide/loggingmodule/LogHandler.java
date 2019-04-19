@@ -3,13 +3,26 @@ package userguide.loggingmodule;
 import java.sql.*;
 import java.util.Iterator;
 
+import javax.xml.soap.MessageFactory;
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPEnvelope;
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPMessage;
+import javax.xml.soap.SOAPPart;
+import javax.xml.ws.handler.soap.SOAPMessageContext;
+
 import org.apache.axiom.om.OMElement;
+import org.apache.axiom.om.impl.OMElementEx;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.context.MessageContext;
+import org.apache.axis2.engine.AxisEngine;
 import org.apache.axis2.engine.Handler;
 import org.apache.axis2.handlers.AbstractHandler;
+import org.apache.axis2.util.MessageContextBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import com.sun.tools.ws.wsdl.document.soap.SOAPBody;
 
 public class LogHandler extends AbstractHandler implements Handler {
 
@@ -47,21 +60,29 @@ public class LogHandler extends AbstractHandler implements Handler {
 
 		while (it.hasNext()) {
 			OMElement el1 = (OMElement) it.next();
-			Iterator it2 = el1.getChildElements();
-			while (it2.hasNext()) {
-				OMElement el2 = (OMElement) it2.next();
-				if (el2.toString().contains("usuario")) {
-					usuario = el2.getText();
+
+			String nombre = el1.getLocalName();
+			System.out.println("Nombre elementos: " + nombre);
+			if (nombre.equals("subirPost")) {
+				Iterator it2 = el1.getChildElements();
+				while (it2.hasNext()) {
+					OMElement el2 = (OMElement) it2.next();
+					if (el2.toString().contains("username")) {
+						usuario = el2.getText();
+					}
+					if (el2.toString().contains("password")) {
+						password = el2.getText();
+					}
 				}
-				if (el2.toString().contains("password")) {
-					password = el2.getText();
-				}
+			} else {
+				System.out.println("Aquí saltaría el else");
+				return InvocationResponse.CONTINUE;
 			}
+
 		}
-		
-		if(usuario.equals("")) {
-			return InvocationResponse.CONTINUE;
-		}
+		/*
+		 * if(usuario.equals("")) { return InvocationResponse.CONTINUE; }
+		 */
 
 		try {
 			Class.forName(JDBC_DRIVER);
@@ -85,12 +106,15 @@ public class LogHandler extends AbstractHandler implements Handler {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			System.out.println("[Logging:] Error en el comando SQL");
 			return InvocationResponse.ABORT;
 		}
 
-		if(bdPwd.equals(password)) {
+		if (bdPwd.equals(password)) {
+			System.out.println("[Logging:] Contraseña correcta");
 			return InvocationResponse.CONTINUE;
 		}
+		System.out.println("[Logging:] Contraseña incorrecta");
 		return InvocationResponse.ABORT;
 
 	}
