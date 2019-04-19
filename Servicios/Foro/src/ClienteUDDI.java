@@ -234,7 +234,7 @@ public class ClienteUDDI {
         accessPoint.setValue(endpoint);
         bindingTemplate.setAccessPoint(accessPoint);
         
-        System.out.println(nuevoServicio.getBindingTemplates().getBindingTemplate().get(0).getAccessPoint().getValue());
+//        System.out.println(nuevoServicio.getBindingTemplates().getBindingTemplate().get(0).getAccessPoint().getValue());
         
         org.uddi.api_v3.BindingTemplates myBindingTemplates = new BindingTemplates();
         bindingTemplate = UDDIClient.addSOAPtModels(bindingTemplate);

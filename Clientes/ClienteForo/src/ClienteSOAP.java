@@ -47,19 +47,16 @@ public class ClienteSOAP {
 		ClienteUDDI clienteuddi = new ClienteUDDI("usuario","clave");
 		
 		AuthToken token = clienteuddi.obtenerTokenDeAutentificacion();
-		
-//        BusinessEntity negocio = clienteuddi.registrarNegocio(new Name("nombre_negocio", ""), new Description("descripcion_negocio", ""), token);
-//        
-//        BusinessService servicio = clienteuddi.registrarServicio(new Name("nombre_servicio", ""), new Description("descripcion_servicio", ""), "http:\\url_servicio", clienteuddi.obtenerClaveNegocio(new Name("nombre_negocio",""), token), token);
-//        
-//        clienteuddi.eliminarNegocio(clienteuddi.obtenerClaveNegocio(new Name("nombre_negocio",""), token), token);
-//        
-//        clienteuddi.eliminarServicio(clienteuddi.obtenerClaveServicio(new Name("nombre_servicio",""), new Name("nombre_negocio",""), token), token);
         
-		System.out.println(clienteuddi.obtenerDireccionServicio(clienteuddi.obtenerClaveServicio(new Name("Foro",""), new Name("VigoCoffeeLovers",""), token), token));
-		
-//		clienteuddi.descartarTokenDeAutentificacion(token);
+		String ruta = clienteuddi.obtenerDireccionServicio(clienteuddi.obtenerClaveServicio(new Name("Foro",""), new Name("VigoCoffeeLovers",""), token), token);
 
+		soapEndpointUrl = ruta;                
+		soapActionSubirPost = ruta + "/subirPost";  
+		soapActionLeerPost = ruta + "/leerPost";    
+		soapActionBuscarxTag = ruta + "/buscarXTag";
+		soapActionBuscar = ruta + "/buscar";        
+		soapActionresgistrar = ruta + "/registrar"; 
+		soapActionContar = ruta + "/contarPost";    
 	}
 
 	public static int subirPost(String post, String[] tags, String username, String password)
