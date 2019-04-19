@@ -19,13 +19,15 @@ Los servicios desplegados son 3 servicios POJO muy sencillos de implementar:
 
 INSTALACIÓN DE MÓDULOS:
 
-1. Se supone que tenemos ya el fichero LoggingModule.mar y CounterModule.mar que vamos a guardar en la carpeta: _{APACHE_HOME}/webapps/axis2/WEB-INF/modules_. Estos ficheros contienen los .class de cada módulo y sus respectivos ficheros module.xml, que le indica al axis2 cuando llamar a las funciones del módulo.
+1. Se supone que tenemos ya el fichero LoggingModule.mar y CounterModule.mar, que guardaremos en la carpeta: _{APACHE_HOME}/webapps/axis2/WEB-INF/modules_. Estos ficheros contienen los .class de cada módulo con sus respectivos ficheros module.xml, que le indica al axis2 en que momento de la ejecución y a que método deben llamar.
 
-2. Abrimos el fichero localizado en : _{APACHE_HOME}/webapps/axis2/WEB-INF/conf/axis2.xml_ y lo editamos de tal forma que en las "Phases" (después de las que están predefinidas en el sistema) vamos a añadir las "phases" de nuestros módulos. Es decir, en cada "PhaseOrder" se le indican los módulos que va a implementar el axis2.
+2. Abrimos el fichero localizado en : _{APACHE_HOME}/webapps/axis2/WEB-INF/conf/axis2.xml_ y lo editamos. De tal forma que en las "Phases" (después de las que están predefinidas en el sistema) vamos a añadir las "phases" de nuestros módulos. Es decir, en cada "PhaseOrder" se le indican los módulos que va a implementar el axis2.
 
-3. Los .class que se deben llamar en cada situación (Inflow, OutFlow...) se especifican en el module.xml, el cual describimos en el apartado 1.
+3. Los .class y los métodos que se deben llamar en cada situación (Inflow, OutFlow...) se especifican en el module.xml, el cual describimos en el apartado 1.
 
 4. Una vez movidos los .mar al apartado de "modules", anteriormente descrito, arrancamos el axis si no lo estaba y vamos a administración. Una vez en administración en "Available modules" podemos ver nuestros módulos y la descripción (opcional) que le hayamos escrito. Ahora solo nos queda ir al apartado de "engage module" y escoger el servicio para el que queramos implementar el módulo. Podemos implementarlo para todos si quisiésemos, pero no todos los servicios están adaptados a las funcionalidades que realiza el módulo.
+
+5. Con el CounterModule se generan dos archivos "IncommingMessage.txt" y "OutgoingMessage.txt" en la raíz del directorio de archivos del servidor. Al abrirlos veremos el número de mensajes entrantes y salientes, respectivamente.
 
 INTALACIÓN DE jUDDI:
 
