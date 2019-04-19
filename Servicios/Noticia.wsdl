@@ -1,26 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:ns="http://Noticia" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://Noticia">
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://ws.apache.org/axis2" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" targetNamespace="http://ws.apache.org/axis2">
     <wsdl:types>
-        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://Noticia">
-            <xs:element name="getDescripcion">
-                <xs:complexType>
-                    <xs:sequence/>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="getDescripcionResponse">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="setDescripcion">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element minOccurs="0" name="descripcion" nillable="true" type="xs:string"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="unqualified" targetNamespace="http://ws.apache.org/axis2">
             <xs:element name="setTitular">
                 <xs:complexType>
                     <xs:sequence>
@@ -28,22 +9,10 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="setUrl">
+            <xs:element name="setDescripcion">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element minOccurs="0" name="url" nillable="true" type="xs:string"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="getUrl">
-                <xs:complexType>
-                    <xs:sequence/>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="getUrlResponse">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="descripcion" nillable="true" type="xs:string"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -59,16 +28,25 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="getDescripcion">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getDescripcionResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
         </xs:schema>
     </wsdl:types>
-    <wsdl:message name="setUrlRequest">
-        <wsdl:part name="parameters" element="ns:setUrl"/>
+    <wsdl:message name="setTitularRequest">
+        <wsdl:part name="parameters" element="ns:setTitular"/>
     </wsdl:message>
-    <wsdl:message name="getUrlRequest">
-        <wsdl:part name="parameters" element="ns:getUrl"/>
-    </wsdl:message>
-    <wsdl:message name="getUrlResponse">
-        <wsdl:part name="parameters" element="ns:getUrlResponse"/>
+    <wsdl:message name="setDescripcionRequest">
+        <wsdl:part name="parameters" element="ns:setDescripcion"/>
     </wsdl:message>
     <wsdl:message name="getDescripcionRequest">
         <wsdl:part name="parameters" element="ns:getDescripcion"/>
@@ -76,45 +54,38 @@
     <wsdl:message name="getDescripcionResponse">
         <wsdl:part name="parameters" element="ns:getDescripcionResponse"/>
     </wsdl:message>
-    <wsdl:message name="setTitularRequest">
-        <wsdl:part name="parameters" element="ns:setTitular"/>
-    </wsdl:message>
     <wsdl:message name="getTitularRequest">
         <wsdl:part name="parameters" element="ns:getTitular"/>
     </wsdl:message>
     <wsdl:message name="getTitularResponse">
         <wsdl:part name="parameters" element="ns:getTitularResponse"/>
     </wsdl:message>
-    <wsdl:message name="setDescripcionRequest">
-        <wsdl:part name="parameters" element="ns:setDescripcion"/>
-    </wsdl:message>
     <wsdl:portType name="NoticiaPortType">
-        <wsdl:operation name="setUrl">
-            <wsdl:input message="ns:setUrlRequest" wsaw:Action="urn:setUrl"/>
+        <wsdl:operation name="setTitular">
+            <wsdl:input message="ns:setTitularRequest" wsaw:Action="urn:setTitular"/>
         </wsdl:operation>
-        <wsdl:operation name="getUrl">
-            <wsdl:input message="ns:getUrlRequest" wsaw:Action="urn:getUrl"/>
-            <wsdl:output message="ns:getUrlResponse" wsaw:Action="urn:getUrlResponse"/>
+        <wsdl:operation name="setDescripcion">
+            <wsdl:input message="ns:setDescripcionRequest" wsaw:Action="urn:setDescripcion"/>
         </wsdl:operation>
         <wsdl:operation name="getDescripcion">
             <wsdl:input message="ns:getDescripcionRequest" wsaw:Action="urn:getDescripcion"/>
             <wsdl:output message="ns:getDescripcionResponse" wsaw:Action="urn:getDescripcionResponse"/>
         </wsdl:operation>
-        <wsdl:operation name="setTitular">
-            <wsdl:input message="ns:setTitularRequest" wsaw:Action="urn:setTitular"/>
-        </wsdl:operation>
         <wsdl:operation name="getTitular">
             <wsdl:input message="ns:getTitularRequest" wsaw:Action="urn:getTitular"/>
             <wsdl:output message="ns:getTitularResponse" wsaw:Action="urn:getTitularResponse"/>
         </wsdl:operation>
-        <wsdl:operation name="setDescripcion">
-            <wsdl:input message="ns:setDescripcionRequest" wsaw:Action="urn:setDescripcion"/>
-        </wsdl:operation>
     </wsdl:portType>
     <wsdl:binding name="NoticiaSoap11Binding" type="ns:NoticiaPortType">
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-        <wsdl:operation name="setUrl">
-            <soap:operation soapAction="urn:setUrl" style="document"/>
+        <wsdl:operation name="setTitular">
+            <soap:operation soapAction="urn:setTitular" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="setDescripcion">
+            <soap:operation soapAction="urn:setDescripcion" style="document"/>
             <wsdl:input>
                 <soap:body use="literal"/>
             </wsdl:input>
@@ -128,21 +99,6 @@
                 <soap:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>
-        <wsdl:operation name="getUrl">
-            <soap:operation soapAction="urn:getUrl" style="document"/>
-            <wsdl:input>
-                <soap:body use="literal"/>
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="literal"/>
-            </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="setTitular">
-            <soap:operation soapAction="urn:setTitular" style="document"/>
-            <wsdl:input>
-                <soap:body use="literal"/>
-            </wsdl:input>
-        </wsdl:operation>
         <wsdl:operation name="getTitular">
             <soap:operation soapAction="urn:getTitular" style="document"/>
             <wsdl:input>
@@ -152,17 +108,17 @@
                 <soap:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>
-        <wsdl:operation name="setDescripcion">
-            <soap:operation soapAction="urn:setDescripcion" style="document"/>
-            <wsdl:input>
-                <soap:body use="literal"/>
-            </wsdl:input>
-        </wsdl:operation>
     </wsdl:binding>
     <wsdl:binding name="NoticiaSoap12Binding" type="ns:NoticiaPortType">
         <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-        <wsdl:operation name="setUrl">
-            <soap12:operation soapAction="urn:setUrl" style="document"/>
+        <wsdl:operation name="setTitular">
+            <soap12:operation soapAction="urn:setTitular" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="setDescripcion">
+            <soap12:operation soapAction="urn:setDescripcion" style="document"/>
             <wsdl:input>
                 <soap12:body use="literal"/>
             </wsdl:input>
@@ -176,21 +132,6 @@
                 <soap12:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>
-        <wsdl:operation name="getUrl">
-            <soap12:operation soapAction="urn:getUrl" style="document"/>
-            <wsdl:input>
-                <soap12:body use="literal"/>
-            </wsdl:input>
-            <wsdl:output>
-                <soap12:body use="literal"/>
-            </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="setTitular">
-            <soap12:operation soapAction="urn:setTitular" style="document"/>
-            <wsdl:input>
-                <soap12:body use="literal"/>
-            </wsdl:input>
-        </wsdl:operation>
         <wsdl:operation name="getTitular">
             <soap12:operation soapAction="urn:getTitular" style="document"/>
             <wsdl:input>
@@ -200,17 +141,17 @@
                 <soap12:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>
-        <wsdl:operation name="setDescripcion">
-            <soap12:operation soapAction="urn:setDescripcion" style="document"/>
-            <wsdl:input>
-                <soap12:body use="literal"/>
-            </wsdl:input>
-        </wsdl:operation>
     </wsdl:binding>
     <wsdl:binding name="NoticiaHttpBinding" type="ns:NoticiaPortType">
         <http:binding verb="POST"/>
-        <wsdl:operation name="setUrl">
-            <http:operation location="setUrl"/>
+        <wsdl:operation name="setTitular">
+            <http:operation location="setTitular"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="setDescripcion">
+            <http:operation location="setDescripcion"/>
             <wsdl:input>
                 <mime:content type="application/xml" part="parameters"/>
             </wsdl:input>
@@ -224,21 +165,6 @@
                 <mime:content type="application/xml" part="parameters"/>
             </wsdl:output>
         </wsdl:operation>
-        <wsdl:operation name="getUrl">
-            <http:operation location="getUrl"/>
-            <wsdl:input>
-                <mime:content type="application/xml" part="parameters"/>
-            </wsdl:input>
-            <wsdl:output>
-                <mime:content type="application/xml" part="parameters"/>
-            </wsdl:output>
-        </wsdl:operation>
-        <wsdl:operation name="setTitular">
-            <http:operation location="setTitular"/>
-            <wsdl:input>
-                <mime:content type="application/xml" part="parameters"/>
-            </wsdl:input>
-        </wsdl:operation>
         <wsdl:operation name="getTitular">
             <http:operation location="getTitular"/>
             <wsdl:input>
@@ -248,22 +174,16 @@
                 <mime:content type="application/xml" part="parameters"/>
             </wsdl:output>
         </wsdl:operation>
-        <wsdl:operation name="setDescripcion">
-            <http:operation location="setDescripcion"/>
-            <wsdl:input>
-                <mime:content type="application/xml" part="parameters"/>
-            </wsdl:input>
-        </wsdl:operation>
     </wsdl:binding>
     <wsdl:service name="Noticia">
         <wsdl:port name="NoticiaHttpSoap11Endpoint" binding="ns:NoticiaSoap11Binding">
-            <soap:address location="http://localhost:8080/axis2/services/Noticia"/>
+            <soap:address location="http://localhost:7162/axis2/services/Noticia.NoticiaHttpSoap11Endpoint/"/>
         </wsdl:port>
         <wsdl:port name="NoticiaHttpSoap12Endpoint" binding="ns:NoticiaSoap12Binding">
-            <soap12:address location="http://localhost:8080/axis2/services/Noticia"/>
+            <soap12:address location="http://localhost:7162/axis2/services/Noticia.NoticiaHttpSoap12Endpoint/"/>
         </wsdl:port>
         <wsdl:port name="NoticiaHttpEndpoint" binding="ns:NoticiaHttpBinding">
-            <http:address location="http://localhost:8080/axis2/services/Noticia"/>
+            <http:address location="http://localhost:7162/axis2/services/Noticia.NoticiaHttpEndpoint/"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

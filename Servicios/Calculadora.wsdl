@@ -5,8 +5,7 @@
             <xs:element name="sumar">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="args0" type="xs:float"/>
-                        <xs:element name="args1" type="xs:float"/>
+                        <xs:element name="s1" type="xs:float"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -20,8 +19,8 @@
             <xs:element name="restar">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="args0" type="xs:float"/>
-                        <xs:element name="args1" type="xs:float"/>
+                        <xs:element name="min" type="xs:float"/>
+                        <xs:element name="sus" type="xs:float"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -35,8 +34,7 @@
             <xs:element name="multiplicar">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="args0" type="xs:float"/>
-                        <xs:element name="args1" type="xs:float"/>
+                        <xs:element name="m1" type="xs:float"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -50,8 +48,8 @@
             <xs:element name="dividir">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="args0" type="xs:float"/>
-                        <xs:element name="args1" type="xs:float"/>
+                        <xs:element name="num" type="xs:float"/>
+                        <xs:element name="den" type="xs:float"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -88,7 +86,7 @@
     <wsdl:message name="dividirResponse">
         <wsdl:part name="parameters" element="ns:dividirResponse"/>
     </wsdl:message>
-    <wsdl:portType name="Calculadora2PortType">
+    <wsdl:portType name="CalculadoraPortType">
         <wsdl:operation name="sumar">
             <wsdl:input message="ns:sumarRequest" wsaw:Action="urn:sumar"/>
             <wsdl:output message="ns:sumarResponse" wsaw:Action="urn:sumarResponse"/>
@@ -106,7 +104,7 @@
             <wsdl:output message="ns:dividirResponse" wsaw:Action="urn:dividirResponse"/>
         </wsdl:operation>
     </wsdl:portType>
-    <wsdl:binding name="Calculadora2Soap11Binding" type="ns:Calculadora2PortType">
+    <wsdl:binding name="CalculadoraSoap11Binding" type="ns:CalculadoraPortType">
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
         <wsdl:operation name="sumar">
             <soap:operation soapAction="urn:sumar" style="document"/>
@@ -145,7 +143,7 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:binding name="Calculadora2Soap12Binding" type="ns:Calculadora2PortType">
+    <wsdl:binding name="CalculadoraSoap12Binding" type="ns:CalculadoraPortType">
         <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
         <wsdl:operation name="sumar">
             <soap12:operation soapAction="urn:sumar" style="document"/>
@@ -184,7 +182,7 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:binding name="Calculadora2HttpBinding" type="ns:Calculadora2PortType">
+    <wsdl:binding name="CalculadoraHttpBinding" type="ns:CalculadoraPortType">
         <http:binding verb="POST"/>
         <wsdl:operation name="sumar">
             <http:operation location="sumar"/>
@@ -223,15 +221,15 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:service name="Calculadora2">
-        <wsdl:port name="Calculadora2HttpSoap11Endpoint" binding="ns:Calculadora2Soap11Binding">
-            <soap:address location="http://localhost:7162/axis2/services/Calculadora2.Calculadora2HttpSoap11Endpoint/"/>
+    <wsdl:service name="Calculadora">
+        <wsdl:port name="CalculadoraHttpSoap11Endpoint" binding="ns:CalculadoraSoap11Binding">
+            <soap:address location="http://localhost:7162/axis2/services/Calculadora.CalculadoraHttpSoap11Endpoint/"/>
         </wsdl:port>
-        <wsdl:port name="Calculadora2HttpSoap12Endpoint" binding="ns:Calculadora2Soap12Binding">
-            <soap12:address location="http://localhost:7162/axis2/services/Calculadora2.Calculadora2HttpSoap12Endpoint/"/>
+        <wsdl:port name="CalculadoraHttpSoap12Endpoint" binding="ns:CalculadoraSoap12Binding">
+            <soap12:address location="http://localhost:7162/axis2/services/Calculadora.CalculadoraHttpSoap12Endpoint/"/>
         </wsdl:port>
-        <wsdl:port name="Calculadora2HttpEndpoint" binding="ns:Calculadora2HttpBinding">
-            <http:address location="http://localhost:7162/axis2/services/Calculadora2.Calculadora2HttpEndpoint/"/>
+        <wsdl:port name="CalculadoraHttpEndpoint" binding="ns:CalculadoraHttpBinding">
+            <http:address location="http://localhost:7162/axis2/services/Calculadora.CalculadoraHttpEndpoint/"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>
