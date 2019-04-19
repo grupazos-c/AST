@@ -41,4 +41,4 @@ INTALACIÓN DE jUDDI:
 
 3. Tras iniciar y ajustar como deseemos el apache, deberemos arrancarlo ejecutando el archivo _juddi-distro-3.3.6/juddi-tomcat-3.3.6/bin/startup.sh_ 
 
-4. Cuando un servicio se dé de alta deberá comunicárselo al servidor UDDI mediante la clase ClienteUDDI
+4. Cuando un servicio se dé de alta deberá comunicárselo al servidor UDDI mediante la clase ClienteUDDI. Para el caso de nuestro servicio de Foro solo tenemos que ejecutar el archivo ForoSetUp.java que, junto a la clase ClienteUDDI, dará de alta el servicio en el servidor UDDI. La ejecucion de este archivo tendrá como parámetro de entrada la URL a dicho servicio (p.e http:\\localhost:7162/axis2/services/Foro ó 192.168.43.2:8080/axis2/services/Foro)
